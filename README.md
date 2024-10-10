@@ -53,7 +53,7 @@ df.set_index('date', inplace=True)
 
 ```
 ### Step 3: Calculate Daily Returns and Volatility
-We calculate daily percentage price changes to track the stock’s day-to-day performance and 20-day rolling volatility for risk assessment:
+We calculate daily percentage price changes to track the stock’s day-to-day performance and 30-day rolling volatility for risk assessment:
 ```
 df['daily_return'] = df['close'].pct_change()
 df['std_dev'] = df['daily_return'].rolling(window=30).std() * np.sqrt(30)
