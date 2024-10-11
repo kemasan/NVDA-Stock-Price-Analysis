@@ -53,19 +53,19 @@ df.set_index('date', inplace=True)
 
 ```
 ### Step 3: Calculate Daily Returns and Volatility
-We calculate daily percentage price changes to track the stock’s day-to-day performance and 30-day rolling volatility for risk assessment:
+We calculate daily percentage price changes to track the stock’s day-to-day performance and 20-day rolling volatility for risk assessment:
 ```
 df['daily_return'] = df['close'].pct_change()
-df['std_dev'] = df['daily_return'].rolling(window=30).std() * np.sqrt(30)
+df['std_dev'] = df['daily_return'].rolling(window=20).std() * np.sqrt(30)
 
 ```
 
 ### Step 4: Calculate Moving Averages and Correlation between data
-We compute the 30-day and 90-day moving averages to understand the stock’s short-term and long-term trends:
+We compute the 20-day and 50-day moving averages to understand the stock’s short-term and long-term trends:
 
 ```
-df['MA30'] = df['close'].rolling(window=30).mean()
-df['MA90'] = df['close'].rolling(window=90).mean()
+df['MA20'] = df['close'].rolling(window=20).mean()
+df['M50'] = df['close'].rolling(window=50).mean()
 corr = df[['close', 'MA30', 'MA90', 'volume', 'daily_return']].corr()
 
 ```
@@ -74,7 +74,7 @@ corr = df[['close', 'MA30', 'MA90', 'volume', 'daily_return']].corr()
 Using local minima and maxima, we identify support and resistance levels:
 
 ```
-n = 30
+n = 20
 support = df.iloc[argrelextrema(df['close'].values, np.less_equal, order=n)[0]]['close']
 resistance = df.iloc[argrelextrema(df['close'].values, np.greater_equal, order=n)[0]]['close']
 
